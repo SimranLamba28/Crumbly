@@ -1,0 +1,48 @@
+.recipe-card {
+  height: 100%;
+  overflow: hidden;
+}
+
+.recipe-image {
+  height: 200px;
+  object-fit: cover;
+  transition: transform var(--transition-speed);
+}
+
+.recipe-card:hover .recipe-image {
+  transform: scale(1.05);
+}
+
+.recipe-card-content {
+  padding: 1.25rem;
+}
+
+.view-btn {
+  background-color: var(--secondary);
+  border-color: var(--secondary);
+}
+
+.view-btn:hover {
+  background-color: #8fd8e0;
+  border-color: #8fd8e0;
+}
+
+.ai-assist-btn {
+  background-color: var(--tertiary);
+  border-color: var(--tertiary);
+}
+
+.ai-assist-btn:hover {
+  background-color: #ffcba7;
+  border-color: #ffcba7;
+}
+
+.favorite-btn.favorited {
+  background-color: var(--error);
+  border-color: var(--error);
+}
+
+.favorite-btn.favorited:hover {
+  background-color: #ff5a72;
+  border-color: #ff5a72;
+}

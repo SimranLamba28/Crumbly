@@ -1,0 +1,152 @@
+/* Export Dialog Styles */
+.export-dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1060;
+  animation: fadeIn 0.3s ease;
+  backdrop-filter: blur(2px);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.export-dialog {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  width: 90%;
+  max-width: 450px;
+  overflow: hidden;
+  transform-origin: center;
+  animation: scaleIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  will-change: transform, opacity;
+}
+
+@keyframes scaleIn {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.export-dialog-header {
+  background: var(--primary);
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.export-dialog-header h3 {
+  margin: 0;
+  color: white;
+  font-size: 1.3rem;
+}
+
+.export-close-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.export-close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.export-dialog-body {
+  padding: 25px;
+}
+
+.export-dialog-body p {
+  margin-bottom: 20px;
+  color: var(--text-light);
+  text-align: center;
+}
+
+.export-options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.export-option-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  background: white;
+  border: 2px solid var(--background);
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  text-align: center;
+  width: 100%;
+}
+
+.export-option-btn:hover {
+  transform: translateY(-3px);
+  border-color: var(--primary);
+  box-shadow: 0 5px 15px rgba(255, 194, 209, 0.3);
+}
+
+.export-option-btn span {
+  font-weight: 600;
+  color: var(--text);
+  margin-top: 10px;
+}
+
+.export-option-btn small {
+  color: var(--text-light);
+  font-size: 0.85rem;
+}
+
+.export-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  position: relative;
+}
+
+.pdf-icon {
+  background: rgba(255, 114, 133, 0.15); /* Error color with opacity */
+}
+
+.pdf-icon::after {
+  content: "PDF";
+  position: absolute;
+  font-weight: bold;
+  color: var(--error);
+  font-size: 1rem;
+}
+
+.image-icon {
+  background: rgba(168, 230, 207, 0.15); /* Success color with opacity */
+}
+
+.image-icon::after {
+  content: "JPG";
+  position: absolute;
+  font-weight: bold;
+  color: var(--success);
+  font-size: 1rem;
+}

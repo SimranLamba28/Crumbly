@@ -1,0 +1,83 @@
+:root {
+  --primary: #ffc2d1;
+  --primary-dark: #ffb3c6;
+  --secondary: #a6e3e9;
+  --tertiary: #ffd9c0;
+  --accent: #e2f0cb;
+  --background: #fff9f9;
+  --surface: #ffffff;
+  --text: #4a4a4a;
+  --text-light: #888888;
+  --error: #ff7285;
+  --success: #a8e6cf;
+  --border-radius: 12px;
+  --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  --transition-speed: 0.3s;
+  
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text);
+  font-family: var(--inter-font);
+}
+
+.main-content {
+  min-height: calc(100vh - 120px);
+  padding: 2rem 0;
+}
+
+.footer {
+  background-color: var(--primary);
+  color: white;
+  padding: 1.5rem;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* Custom Bootstrap overrides */
+.btn-primary {
+  background-color: var(--primary-dark);
+  border-color: var(--primary-dark);
+}
+
+.btn-primary:hover {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.btn-outline-primary {
+  color: var(--primary-dark);
+  border-color: var(--primary-dark);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.card {
+  border-radius: var(--border-radius);
+  border: none;
+  box-shadow: var(--box-shadow);
+  transition: transform var(--transition-speed);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* Loading spinner */
+.loading-spinner {
+  border: 3px solid var(--primary);
+  border-top: 3px solid var(--secondary);
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

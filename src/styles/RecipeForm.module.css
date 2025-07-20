@@ -1,0 +1,21 @@
+.recipeForm {
+  max-width: 800px;
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.recipeForm h1 {
+  color: #ff85a2;
+  font-weight: 700;
+}
+
+.formLabel {
+  font-weight: 600;
+  color: #555;
+}
+
+.addRemoveButtons {
+  margin-top: 0.5rem;
+}

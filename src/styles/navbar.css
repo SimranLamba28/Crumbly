@@ -1,0 +1,94 @@
+.navbar {
+  background-color: var(--surface);
+  padding: 1rem 2rem;
+  box-shadow: var(--box-shadow);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.navbar-logo .logo {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-link {
+  color: var(--text);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: color var(--transition-speed);
+}
+
+.nav-link:hover {
+  color: var(--primary-dark);
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.user-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.user-dropdown {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  background-color: var(--surface);
+  border-radius: var(--border-radius);
+  box-shadow: var(--box-shadow);
+  padding: 1rem;
+  min-width: 200px;
+  z-index: 1000;
+}
+
+.dropdown-item {
+  display: block;
+  padding: 0.5rem 0;
+  color: var(--text);
+  text-decoration: none;
+  transition: color var(--transition-speed);
+}
+
+.dropdown-item:hover {
+  color: var(--primary-dark);
+}
+
+.sign-in-btn, .sign-out-btn {
+  width: 100%;
+  background-color: var(--primary-dark);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background-color var(--transition-speed);
+}
+
+.sign-in-btn:hover, .sign-out-btn:hover {
+  background-color: var(--primary);
+}
