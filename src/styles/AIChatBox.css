@@ -186,6 +186,12 @@
   background: var(--tertiary);
   border-bottom-left-radius: 4px;
 }
+/*fix for markdown headings*/
+.message-content h3 {
+  font-size: 1.2rem !important;
+  margin: 0.2rem 0;
+}
+
 
 .ai-chat-footer {
   padding: 16px;

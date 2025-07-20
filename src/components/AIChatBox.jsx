@@ -4,9 +4,11 @@ import { createPortal } from 'react-dom';
 import axios from 'axios';
 import { FaPaperPlane, FaRobot, FaUser } from 'react-icons/fa';
 import { IoClose } from 'react-icons/io5';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import '@/styles/AIChatBox.css';
 
-const AIChatBox = ({ recipe, show, onClose }) => {
+const AIChatBox = ({ recipe, show, onClose }) =>{
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -37,7 +39,10 @@ const AIChatBox = ({ recipe, show, onClose }) => {
         recipe: recipe
        });
       const reply = res.data.reply;
-      setMessages([...newMessages, { role: 'assistant', content: reply }]);
+
+      const cleanReply = reply.includes("Answer:") ? reply.split("Answer:")[1].trim(): reply;
+
+      setMessages([...newMessages, { role: 'assistant', content: cleanReply }]);
     } catch (err) {
       console.error('Error sending message to AI:', err);
       let errorMessage = 'Sorry, I encountered an error. Please try again later.';
@@ -138,9 +143,9 @@ const AIChatBox = ({ recipe, show, onClose }) => {
                   {msg.role === 'user' ? <FaUser size={16} /> : <FaRobot size={16} />}
                 </div>
                 <div className="message-content">
-                  {msg.content.split('\n').map((paragraph, i) => (
-                    <p key={i}>{paragraph}</p>
-                  ))}
+                  <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {msg.content}
+                  </ReactMarkdown>
                 </div>
               </div>
             ))
