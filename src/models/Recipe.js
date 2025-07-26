@@ -1,6 +1,5 @@
 import mongoose, {Schema} from 'mongoose';
 
-// models/Recipe.js
 const recipeSchema = new Schema({
   title: { type: String, required: true },
   description: String,
@@ -10,15 +9,15 @@ const recipeSchema = new Schema({
     unit: String,
     original: String
   }],
-  instructions: [{ step: Number, text: String }],
+  instructions: [{text: String }],
   prepTime: Number,
   cookTime: Number,
   servings: Number,
   difficulty: { type: String, enum: ['Easy', 'Medium', 'Hard'] },
   tags: [String],
   image: {
-    public_id: { type: String }, // Cloudinary public ID
-    url: { type: String },       // Cloudinary secure URL
+    public_id: { type: String }, 
+    url: { type: String },       
     
   },
   creator: { 

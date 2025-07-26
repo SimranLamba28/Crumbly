@@ -1,12 +1,11 @@
-//recipecard.jsx
 'use client';
 
 import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import axios from 'axios';
 import RecipeModal from './RecipeModal';
-import AIChatBox from './AIChatBox';
-import { FaHeart, FaRegHeart, FaEye, FaCommentAlt, FaStar, FaTrash } from 'react-icons/fa';
+import AIChatBox from './AIChatBox/AIChatBox';
+import { FaHeart, FaRegHeart, FaEye, FaCommentAlt, FaTrash } from 'react-icons/fa';
 import { Button, Card } from 'react-bootstrap';
 import '@/styles/recipe.css';
 
@@ -118,7 +117,7 @@ export default function RecipeCard({ recipe, onDelete, isFavorite, onSaveToFavor
       {isModalOpen && recipeDetails && (
         <RecipeModal 
           recipe={recipeDetails} 
-          show={isModalOpen}  // Add this line
+          show={isModalOpen}  
           onClose={() => setIsModalOpen(false)}
           onSaveToFavorites={()=> onSaveToFavorites(recipe)}
           isFavorite={isFavorite}
@@ -127,7 +126,7 @@ export default function RecipeCard({ recipe, onDelete, isFavorite, onSaveToFavor
       
       {showChat && recipeDetails && (
         <AIChatBox 
-          recipe={recipeDetails} //{recipeDetails || recipe}
+          recipe={recipeDetails} 
           show={showChat}
           onClose={() => setShowChat(false)}
        />

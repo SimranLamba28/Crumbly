@@ -10,7 +10,7 @@ const favoriteSchema = new Schema({
     type: String,
     required: true
   },
-  source: {  // Add this field to distinguish sources
+  source: {  
     type: String,
     enum: ['api'],
     required: true,
@@ -27,7 +27,6 @@ const favoriteSchema = new Schema({
   }
 }, { timestamps: true });
 
-// Create a composite unique index on userId and recipeId
 favoriteSchema.index({ userId: 1, recipeId: 1 }, { unique: true });
 
 const Favorite = mongoose.models.Favorite || mongoose.model('Favorite', favoriteSchema);

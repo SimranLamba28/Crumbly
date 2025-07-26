@@ -7,7 +7,7 @@ import axios from 'axios';
 import { Container, Alert, Spinner } from 'react-bootstrap';
 import styles from '@/styles/RecipeForm.module.css';
 import RecipeForm from '@/components/RecipeForm';
-//import useImageUpload from '@/hooks/useImageUpload';
+
 
 export default function AddRecipePage() {
   const { data: session, status } = useSession();
@@ -99,7 +99,7 @@ export default function AddRecipePage() {
           unit: item.unit,
           original: `${item.amount} ${item.unit} ${item.name}`
         })),
-        instructions: recipe.instructions.map((text, idx) => ({ step: idx + 1, text })),
+        instructions: recipe.instructions.map(text => ({ text })),
         creator: session.user.id,
         source: 'user',
         image: recipe.image
