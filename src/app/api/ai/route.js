@@ -1,4 +1,4 @@
-// ai/route.js
+// app/api/ai/route.js
 import { NextResponse } from 'next/server';
 import { getRecipePrompt } from '@/lib/getRecipePrompt';
 
@@ -7,44 +7,74 @@ export async function POST(req) {
 
   try {
     if (!recipe) {
-      console.error('API Error: Recipe object is missing from the request body.');
-      return NextResponse.json({ error: 'Recipe data is required for this AI assistant.' }, { status: 400 });
+      return NextResponse.json(
+        { error: 'Recipe data is required for this AI assistant.' },
+        { status: 400 }
+      );
     }
-    
-    const recipeSystemPrompt = getRecipePrompt(recipe);
 
-    const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+    // Inject system prompt if first message
+    const systemPrompt = getRecipePrompt(recipe);
+    const fullMessages = messages.length === 1
+      ? [{ role: 'system', content: systemPrompt }, ...messages]
+      : messages;
+
+    const model = 'deepseek/deepseek-chat-v3-0324:free';
+    const temperature = 0.7;
+
+    const aiRes = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model: 'deepseek/deepseek-r1-0528:free',
-        messages: [
-          { role: 'system', content: recipeSystemPrompt},
-          ...messages.filter(m => m.role !== 'system'),
-        ],
+        model,
+        messages: fullMessages,
+        stream: true,
+        temperature,
+        top_p: 1,
+        presence_penalty: 0.5,
+        frequency_penalty: 0.6,
       }),
     });
 
-    if (!res.ok) {
-      const errBody = await res.text();
-      console.error('OpenRouter error:', res.status, errBody);
+    if (!aiRes.ok) {
+      const errText = await aiRes.text();
+      console.error('OpenRouter error:', aiRes.status, errText);
       return NextResponse.json({ error: 'AI server error' }, { status: 502 });
     }
 
-    const data = await res.json();
-    const reply = data.choices?.[0]?.message?.content?.trim();
-    if (!reply) {
-      console.warn('OpenRouter returned empty', data);
-      return NextResponse.json({ reply: 'Hmm, I got nothing back — try again.' });
-    }
+    // Stream wrapper for OpenRouter response
+    const reader = aiRes.body.getReader();
+    const encoder = new TextEncoder();
 
-    return NextResponse.json({ reply });
+    const stream = new ReadableStream({
+      async start(controller) {
+        const decoder = new TextDecoder();
+        let done = false;
 
-  } catch (e) {
-    console.error('API exception', e);
-    return NextResponse.json({ error: 'Internal server error.' }, { status: 500 });
+        while (!done) {
+          const { value, done: streamDone } = await reader.read();
+          done = streamDone;
+          if (value) controller.enqueue(value);
+        }
+
+        controller.close();
+        reader.releaseLock();
+      }
+    });
+
+    return new Response(stream, {
+      headers: {
+        'Content-Type': 'text/event-stream',
+        'Cache-Control': 'no-cache',
+        Connection: 'keep-alive',
+      }
+    });
+
+  } catch (error) {
+    console.error('AI route error:', error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }
