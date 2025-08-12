@@ -24,7 +24,6 @@ export default function RecipeForm({
   console.log('user id being sent to form', userId);
   return (
     <Form onSubmit={onSubmit}>
-      {/* Title & Description */}
       <Form.Group className="mb-3">
         <Form.Label>Recipe Title</Form.Label>
         <Form.Control type="text" name="title" value={recipe.title} onChange={onChange} required placeholder="Enter recipe name" />
@@ -34,7 +33,6 @@ export default function RecipeForm({
         <Form.Control as="textarea" name="description" value={recipe.description} onChange={onChange} rows={2} placeholder="Brief description" />
       </Form.Group>
 
-      {/* Timings & Servings */}
       <Row className="mb-3">
         <Col md={3}>
           <Form.Group>
@@ -66,7 +64,6 @@ export default function RecipeForm({
         </Col>
       </Row>
 
-      {/* Ingredients with amount/unit */}
       <Form.Group className="mb-3">
         <Form.Label>Ingredients</Form.Label>
         {recipe.ingredients.map((ing, idx) => (
@@ -105,7 +102,6 @@ export default function RecipeForm({
         <Button variant="outline-primary" onClick={addIngredientField}>Add Ingredient</Button>
       </Form.Group>
 
-      {/* Instructions */}
       <Form.Group className="mb-3">
         <Form.Label>Instructions</Form.Label>
         {recipe.instructions.map((instr, idx) => (
@@ -125,7 +121,6 @@ export default function RecipeForm({
         <Button variant="outline-primary" onClick={() => addArrayField('instructions')}>Add Step</Button>
       </Form.Group>
 
-      {/* Tags */}
       <Form.Group className="mb-3">
         <Form.Label>Tags</Form.Label>
         {recipe.tags.map((tag, idx) => (
@@ -145,7 +140,6 @@ export default function RecipeForm({
         <Button variant="outline-primary" onClick={() => addArrayField('tags')}>Add Tag</Button>
       </Form.Group>
 
-      {/* Image */}
       <Form.Group className="mb-4">
         <Form.Label>Recipe Image</Form.Label>
         <CldUploadWidget
@@ -203,7 +197,6 @@ export default function RecipeForm({
         )}
       </Form.Group>
 
-      {/* Submit */}
       <Button variant="primary" type="submit" disabled={isSubmitting} className="w-100 py-2">
         {isSubmitting ? (<><Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" className="me-2"/>Saving Recipe...</>) : 'Save Recipe'}
       </Button>

@@ -25,14 +25,12 @@ const RecipeExportTemplate = ({ recipe, exportRef }) => {
 
   return (
     <div className="recipe-export-template" ref={exportRef}>
-      {/* Header */}
       <div className="export-header">
         <div className="header-decoration"></div>
         <h1>{title}</h1>
         <div className="header-decoration"></div>
       </div>
 
-      {/* Content */}
       <div className="export-content">
           <div className="metadata">
             {totalTime > 0 && (
@@ -55,7 +53,6 @@ const RecipeExportTemplate = ({ recipe, exportRef }) => {
             )}
           </div>
 
-        {/* Ingredients */}
         <div className="section">
           <h2 className="section-title">Ingredients</h2>
           <ul className="ingredient-list">
@@ -68,7 +65,6 @@ const RecipeExportTemplate = ({ recipe, exportRef }) => {
           </ul>
         </div>
 
-        {/* Instructions */}
         <div className="section">
           <h2 className="section-title">Instructions</h2>
           <ol className="instruction-list">

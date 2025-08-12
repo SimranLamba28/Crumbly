@@ -5,7 +5,6 @@ import jsPDF from 'jspdf';
 const useRecipeExport = () => {
   const exportRef = useRef(null);
 
-  // ——— Helpers ———
   const isMobile = () =>
     /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i
       .test(navigator.userAgent);
@@ -21,7 +20,6 @@ const useRecipeExport = () => {
     setTimeout(() => URL.revokeObjectURL(url), 100);
   };
 
-  // Shared html2canvas options
   const canvasOpts = () => ({
     scale:              isMobile() ? 2 : 3,
     useCORS:            true,
@@ -34,7 +32,6 @@ const useRecipeExport = () => {
     windowHeight:       exportRef.current?.scrollHeight,
   });
 
-  // ——— Image Download ———
   const downloadImage = async (fileName = 'recipe') => {
     if (!exportRef.current) return;
     try {
@@ -50,15 +47,12 @@ const useRecipeExport = () => {
     }
   };
 
-  // ——— PDF Download ———
  const downloadPDF = async (fileName = 'recipe') => {
   if (!exportRef.current) return;
   
   try {
-    // 1) Render to canvas
     const canvas = await html2canvas(exportRef.current, canvasOpts());
 
-    // 2) PDF setup
     const imgW = canvas.width;
     const imgH = canvas.height;
     const imgData = canvas.toDataURL('image/jpeg', 0.95);
@@ -77,11 +71,9 @@ const useRecipeExport = () => {
     const ratio = availW / imgW;
     const scaledH = imgH * ratio;
 
-    // 3) Single-page shortcut
     if (scaledH <= availH + 10) {
       pdf.addImage(imgData, 'JPEG', margin, margin, availW, scaledH);
     } else {
-      // 4) Slice into pages
       const pxPerPage = availH / ratio;
       const pages = Math.ceil(imgH / pxPerPage);
 
@@ -102,8 +94,7 @@ const useRecipeExport = () => {
         pdf.addImage(pageImg, 'JPEG', margin, margin, availW, hPx * ratio);
       }
     }
-    
-    // 5) Download
+
     const cleanName = `${fileName.replace(/[^a-z0-9]/gi,'_')}.pdf`.toLowerCase();
     const blob = pdf.output('blob');
     downloadBlob(blob, cleanName);

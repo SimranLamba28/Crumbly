@@ -1,4 +1,3 @@
-//page.js
 'use client'
 
 import { useState, useEffect } from 'react';
@@ -16,7 +15,6 @@ export default function Home() {
   const [favorites, setFavorites] = useState({});
   const apiKey = process.env.NEXT_PUBLIC_SPOONACULAR_API_KEY;
 
-  // Load user favorites if logged in
   useEffect(() => {
     const loadFavorites = async () => {
       if (!session?.user?.id) return; 

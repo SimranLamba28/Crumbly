@@ -15,7 +15,6 @@ export default function RecipeModal({ recipe, show, onClose, onSaveToFavorites, 
 
   if (!recipe) return null;
 
-  // === Pre-processed / Normalized Data ===
   const userRecipe = recipe.source === 'user';
   const title = recipe.title || 'Untitled';
   const prepTime = recipe.prepTime || 0;

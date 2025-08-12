@@ -8,7 +8,6 @@ import '../styles/exportDialog.css';
 export default function ExportDialog({ onClose, onDownload }) {
   const dialogRef = useRef(null);
 
-  // Lock body scroll and handle click outside
   useEffect(() => {
     document.body.style.overflow = 'hidden';
     

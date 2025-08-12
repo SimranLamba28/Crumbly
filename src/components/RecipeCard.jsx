@@ -18,7 +18,6 @@ export default function RecipeCard({ recipe, onDelete, isFavorite, onSaveToFavor
   const [loading, setLoading] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
-  // Only show favorite button for API recipes
   const showFavoriteButton = !recipe._id; 
 
   const fetchRecipeDetails = async () => {

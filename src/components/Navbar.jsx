@@ -3,14 +3,13 @@
 import { useState, useEffect } from 'react';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import Link from 'next/link';
-import { FaSearch, FaUser, FaHeart, FaPlus, FaHome, FaMagic, FaBook } from 'react-icons/fa';
+import {FaUser, FaHeart, FaPlus, FaHome, FaMagic, FaBook } from 'react-icons/fa';
 import '../styles/navbar.css';
 
 export default function Navbar() {
   const { data: session, status } = useSession();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  // Close menu when clicking outside
   useEffect(() => {
     const closeMenu = () => setIsMenuOpen(false);
     if (isMenuOpen) {

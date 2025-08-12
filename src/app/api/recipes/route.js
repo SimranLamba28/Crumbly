@@ -12,13 +12,11 @@ export async function GET(request) {
     const userId = searchParams.get('userId');
 
     if (userId) {
-      // Get all recipes by a specific user
       const recipes = await Recipe.find({ creator: userId });
       return NextResponse.json({ recipes });
     }
 
     if (id) {
-      // Get a single recipe by ID
       const recipe = await Recipe.findById(id);
       if (!recipe) {
         return NextResponse.json(
@@ -49,7 +47,6 @@ export async function POST(request) {
     // Debug log remove
     console.log('Received recipe data:', recipeData);
 
-    // Validate required fields
     if (!recipeData.creator) {
       return NextResponse.json(
         { error: 'Creator ID is required' },
@@ -67,7 +64,6 @@ export async function POST(request) {
     const recipe = new Recipe({
       ...recipeData,
       creator: new mongoose.Types.ObjectId(recipeData.creator),
-      // Preserve full image object (no transformation needed)
       image: recipeData.image || null
     });
 
@@ -80,7 +76,7 @@ export async function POST(request) {
       { message: 'Recipe saved successfully', 
         recipe: {
           ...recipe.toObject(),
-          _id: recipe._id.toString() // Convert ObjectId to string
+          _id: recipe._id.toString() 
         }
       },
       { status: 201 }
@@ -97,8 +93,6 @@ export async function DELETE(request) {
   await connect();
   try {
     const { id } = await request.json();
-
-    // Step 1: Find the recipe first
     const recipe = await Recipe.findById(id);
     if (!recipe) {
       return NextResponse.json(
@@ -107,21 +101,18 @@ export async function DELETE(request) {
       );
     }
 
-    // Step 2: Delete image from Cloudinary (if exists)
     if (recipe.image?.public_id) {
-      console.log('🗑️ Starting image deletion for:', recipe.image.public_id);
+      console.log('Starting image deletion for:', recipe.image.public_id);
       try {
         const result= await deleteImage(recipe.image.public_id);
         if (result.result !== 'ok') {
-          console.warn('⚠️ Deletion may have failed:', result);
-          // Continue with DB deletion anyway
+          console.warn('Deletion may have failed:', result);
         }
       } catch (err) {
         console.error('Non-blocking deletion error:', err.message);
       }
     }
 
-    // Step 3: Delete the recipe from DB
     await Recipe.findByIdAndDelete(id);
 
     return NextResponse.json(
@@ -129,7 +120,7 @@ export async function DELETE(request) {
       { status: 200 }
     );
   } catch (error) {
-    console.error('💥 Fatal deletion error:', error.message);
+    console.error('Fatal deletion error:', error.message);
     return NextResponse.json(
       { error: 'Failed to delete recipe', details: error.message },
       { status: 500 }

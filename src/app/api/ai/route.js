@@ -1,4 +1,3 @@
-// app/api/ai/route.js
 import { NextResponse } from 'next/server';
 import { getRecipePrompt } from '@/lib/getRecipePrompt';
 
@@ -13,14 +12,10 @@ export async function POST(req) {
       );
     }
 
-    // Inject system prompt if first message
     const systemPrompt = getRecipePrompt(recipe);
     const fullMessages = messages.length === 1
       ? [{ role: 'system', content: systemPrompt }, ...messages]
       : messages;
-
-    const model = 'deepseek/deepseek-chat-v3-0324:free';
-    const temperature = 0.7;
 
     const aiRes = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST',
@@ -29,10 +24,10 @@ export async function POST(req) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        model,
+        model: 'deepseek/deepseek-chat-v3-0324:free',
         messages: fullMessages,
         stream: true,
-        temperature,
+        temperature: 0.7,
         top_p: 1,
         presence_penalty: 0.5,
         frequency_penalty: 0.6,
@@ -42,39 +37,25 @@ export async function POST(req) {
     if (!aiRes.ok) {
       const errText = await aiRes.text();
       console.error('OpenRouter error:', aiRes.status, errText);
-      return NextResponse.json({ error: 'AI server error' }, { status: 502 });
+      return NextResponse.json(
+        { error: 'AI server error' }, 
+        { status: 502 }
+      );
     }
 
-    // Stream wrapper for OpenRouter response
-    const reader = aiRes.body.getReader();
-    const encoder = new TextEncoder();
-
-    const stream = new ReadableStream({
-      async start(controller) {
-        const decoder = new TextDecoder();
-        let done = false;
-
-        while (!done) {
-          const { value, done: streamDone } = await reader.read();
-          done = streamDone;
-          if (value) controller.enqueue(value);
-        }
-
-        controller.close();
-        reader.releaseLock();
-      }
-    });
-
-    return new Response(stream, {
+    return new Response(aiRes.body, {
       headers: {
         'Content-Type': 'text/event-stream',
         'Cache-Control': 'no-cache',
-        Connection: 'keep-alive',
-      }
+        'Connection': 'keep-alive',
+      },
     });
 
   } catch (error) {
     console.error('AI route error:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    return NextResponse.json(
+      { error: 'Internal server error' }, 
+      { status: 500 }
+    );
   }
 }

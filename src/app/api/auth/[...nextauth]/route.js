@@ -1,4 +1,3 @@
-// /app/api/auth/[...nextauth]/route.js
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import connect from '@/lib/mongodb';
@@ -45,7 +44,7 @@ export const authOptions = {
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
-  debug: true, // Enable debugging logs for NextAuth
+  debug: true, //remove
 };
 
 const handler = NextAuth(authOptions);

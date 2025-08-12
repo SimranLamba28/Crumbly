@@ -38,11 +38,9 @@ export default function YourRecipesPage() {
   }, [status, session?.user?.id]);
 
   useEffect(() => {
-    // Check if we're coming from a recipe addition
   const urlParams = new URLSearchParams(window.location.search);
   if (urlParams.get('new') === 'true') {
     setNewRecipeAdded(true);
-    // Clean the URL
     window.history.replaceState({}, '', '/your-recipes');
   }
     fetchUserRecipes();
@@ -118,7 +116,7 @@ export default function YourRecipesPage() {
               recipe={recipe}
               onSaveToFavorites={() => {}}
               onDelete={handleDeleteRecipe}
-              isFavorite={false} // Since these are user's own recipes
+              isFavorite={false} 
              
             />
           ))}

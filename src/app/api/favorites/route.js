@@ -42,25 +42,22 @@ export async function POST(request) {
     }
     
     await connect();
-    
-    // Check if favorite already exists
+
     const existingFavorite = await Favorite.findOne({ userId, recipeId });
     
     if (existingFavorite) {
-      // If it exists, remove it (toggling favorite status)
       await Favorite.findByIdAndDelete(existingFavorite._id);
       return Response.json({ 
         message: 'Removed from favorites',
         isFavorite: false 
       });
     } else {
-      // If it doesn't exist, add it
       await Favorite.create({
       userId,
       recipeId,
       title,
       image,
-      source: 'api' // Explicitly mark as API recipe
+      source: 'api' 
     });
 
     return Response.json(
