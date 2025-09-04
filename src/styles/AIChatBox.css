@@ -1,7 +1,6 @@
-/* Fixed positioning for the portal */
 .ai-chat-popup {
   position: fixed;
-  bottom: 20px;
+  bottom: 10px;
   right: 20px;
   width: 380px;
   max-width: calc(100vw - 40px);
@@ -16,7 +15,7 @@
   transform: translateY(100%) scale(0.8);
   opacity: 0;
   animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-  z-index: 1000; /* Higher than anything else */
+  z-index: 1000; 
   transition: transform 0.3s ease, opacity 0.3s ease;
   border: 1px solid rgba(0, 0, 0, 0.05);
 }
@@ -50,7 +49,6 @@
   }
 }
 
-/* Add backdrop overlay when chat is open */
 .ai-chat-backdrop {
   position: fixed;
   top: 0;
@@ -67,7 +65,6 @@
   to { opacity: 1; }
 }
 
-/* Rest of the styles remain the same as before */
 .ai-chat-container {
   display: flex;
   flex-direction: column;
@@ -186,7 +183,7 @@
   background: var(--tertiary);
   border-bottom-left-radius: 4px;
 }
-/*fix for markdown headings*/
+
 .message-content h3 {
   font-size: 1.2rem !important;
   margin: 0.2rem 0;

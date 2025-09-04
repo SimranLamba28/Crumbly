@@ -1,10 +1,9 @@
-/* Recipe Modal Styles */
 .recipe-modal .modal-content {
   border-radius: 16px;
   border: none;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
   overflow: visible !important;
-  transform: none !important; /* Prevent Bootstrap transform interference */
+  transform: none !important; 
 }
 
 .recipe-modal .modal-backdrop {
