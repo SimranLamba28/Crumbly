@@ -4,11 +4,11 @@ import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { Card } from 'react-bootstrap';
 import '@/styles/recipe.css';
-import { useRecipeDetails } from '../hooks/useRecipeDetails';
-import { useConfirmation } from '../hooks/useConfirmation';
+import { useRecipeDetails } from '../../hooks/useRecipeDetails';
+import { useConfirmation } from '../../hooks/useConfirmation';
 import RecipeModal from './RecipeModal';
-import AIChatBox from './AIChatBox/AIChatBox';
-import RecipeActionButtons from './RecipeActionButtons';
+import AIChatBox from '../AIChatBox/AIChatBox';
+import RecipeActionButtons from '../Recipe/RecipeActionButtons';
 
 
 export default function RecipeCard({ recipe, onDelete, isFavorite, onSaveToFavorites}) {

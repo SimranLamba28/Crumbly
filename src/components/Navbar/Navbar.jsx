@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useSession, signIn, signOut } from 'next-auth/react';
 import Link from 'next/link';
 import {FaUser, FaHeart, FaPlus, FaHome, FaBook } from 'react-icons/fa';
-import '../styles/navbar.css';
+import '../../styles/navbar.css';
 
 export default function Navbar() {
   const { data: session, status } = useSession();

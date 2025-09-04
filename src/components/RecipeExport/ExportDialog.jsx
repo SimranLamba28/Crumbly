@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import { createPortal } from 'react-dom';
-import '../styles/exportDialog.css';
+import '../../styles/exportDialog.css';
 
 export default function ExportDialog({ onClose, onDownload }) {
   const dialogRef = useRef(null);

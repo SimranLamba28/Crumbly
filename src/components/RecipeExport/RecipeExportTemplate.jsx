@@ -1,6 +1,6 @@
 'use client';
 import { FaClock, FaUtensils, FaLeaf, FaChevronRight } from 'react-icons/fa';
-import '../styles/recipeExport.css';
+import '../../styles/recipeExport.css';
 import { useRecipeDisplayData } from '@/hooks/useRecipeDisplayData';
 
 const RecipeExportTemplate = ({ recipe, exportRef }) => {

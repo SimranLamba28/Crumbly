@@ -4,9 +4,9 @@ import { useState } from 'react';
 import { FaHeart, FaRegHeart, FaTimes, FaDownload } from 'react-icons/fa';
 import { Modal, Button } from 'react-bootstrap';
 import useRecipeExport from '@/hooks/useRecipeExport';
-import ExportDialog from './ExportDialog';
-import RecipeExportTemplate from './RecipeExportTemplate';
-import '../styles/recipeModal.css';
+import ExportDialog from '../RecipeExport/ExportDialog';
+import RecipeExportTemplate from '../RecipeExport/RecipeExportTemplate';
+import '../../styles/RecipeForm.module.css';
 
 import { useRecipeDisplayData } from '@/hooks/useRecipeDisplayData';
 import { useAlert } from '@/hooks/useAlert';

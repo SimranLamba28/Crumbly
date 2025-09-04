@@ -1,7 +1,7 @@
 'use client';
 
 import { useSession } from 'next-auth/react';
-import RecipeCard from "@/components/RecipeCard";
+import RecipeCard from "@/components/Recipe/RecipeCard";
 import { FaSearch, FaBirthdayCake, FaCookie, FaIceCream } from 'react-icons/fa';
 import '../styles/home.css';
 import { useRecipeSearch } from '@/hooks/useRecipeSearch';
