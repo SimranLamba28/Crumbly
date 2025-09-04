@@ -5,7 +5,7 @@ const ChatInput = ({ input, setInput, onSubmit, loading, inputRef }) => (
     <div className="input-group">
       <input
         ref={inputRef}
-        value={input}
+        value={input || ''}
         onChange={(e) => setInput(e.target.value)}
         placeholder="Ask about this recipe..."
         className="ai-input"
@@ -14,7 +14,7 @@ const ChatInput = ({ input, setInput, onSubmit, loading, inputRef }) => (
       <button
         type="submit"
         className="ai-send-btn"
-        disabled={loading || !input.trim()}
+        disabled={loading || !(input && input.trim())}
       >
         <FaPaperPlane size={16} />
       </button>
