@@ -22,9 +22,11 @@ export async function POST(req) {
       headers: {
         Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
         'Content-Type': 'application/json',
+        'HTTP-Referer': process.env.NEXTAUTH_URL || 'http://localhost:3000',
+        'X-Title': 'BakeMuse AI Assistant',
       },
       body: JSON.stringify({
-        model: 'deepseek/deepseek-chat-v3-0324:free',
+        model: 'tngtech/deepseek-r1t2-chimera:free',
         messages: fullMessages,
         stream: true,
         temperature: 0.7,
@@ -38,12 +40,14 @@ export async function POST(req) {
       const errText = await aiRes.text();
       console.error('OpenRouter error:', aiRes.status, errText);
       return NextResponse.json(
-        { error: 'AI server error' }, 
+        { error: 'AI server error:', errText},
         { status: 502 }
       );
     }
 
-    return new Response(aiRes.body, {
+    const stream = aiRes.body;
+
+    return new Response(stream, {
       headers: {
         'Content-Type': 'text/event-stream',
         'Cache-Control': 'no-cache',
@@ -54,7 +58,7 @@ export async function POST(req) {
   } catch (error) {
     console.error('AI route error:', error);
     return NextResponse.json(
-      { error: 'Internal server error' }, 
+      { error: 'Internal server error:' + error.message }, 
       { status: 500 }
     );
   }
