@@ -5,80 +5,78 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { Container, Alert, Spinner } from 'react-bootstrap';
-import styles from '@/styles/RecipeForm.module.css';
-import RecipeForm from '@/components/RecipeForm';
-
+import styles from '@/components/Recipe/RecipeForm.module.css';
+import RecipeForm from '@/components/Recipe/RecipeForm';
 
 export default function AddRecipePage() {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const [uploading, setUploading] = useState(false);
 
   const [recipe, setRecipe] = useState({
     title: '',
     description: '',
-    ingredients: [ { name: '', amount: '', unit: '' } ],
+    ingredients: [{ name: '', amount: '', unit: '' }],
     instructions: [''],
     prepTime: 15,
     cookTime: 30,
     servings: 4,
     difficulty: 'Medium',
     tags: [''],
-    image: ''
+    image: null,
   });
 
+  const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setRecipe(prev => ({ ...prev, [name]: value }));
+    setRecipe((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleIngredientChange = (index, field, value) => {
-    const newIngredients = [...recipe.ingredients];
-    newIngredients[index] = { ...newIngredients[index], [field]: value };
-    setRecipe(prev => ({ ...prev, ingredients: newIngredients }));
+    setRecipe((prev) => {
+      const updated = [...prev.ingredients];
+      updated[index] = { ...updated[index], [field]: value };
+      return { ...prev, ingredients: updated };
+    });
   };
 
-  const addIngredientField = () => {
-    setRecipe(prev => ({
+  const addIngredientField = () =>
+    setRecipe((prev) => ({
       ...prev,
-      ingredients: [...prev.ingredients, { name: '', amount: '', unit: '' }]
+      ingredients: [...prev.ingredients, { name: '', amount: '', unit: '' }],
     }));
-  };
 
-  const removeIngredientField = (index) => {
-    const newIngredients = recipe.ingredients.filter((_, i) => i !== index);
-    setRecipe(prev => ({ ...prev, ingredients: newIngredients }));
-  };
+  const removeIngredientField = (index) =>
+    setRecipe((prev) => ({
+      ...prev,
+      ingredients: prev.ingredients.filter((_, i) => i !== index),
+    }));
 
-  const handleArrayChange = (field, index, value) => {
-    const newArray = [...recipe[field]];
-    newArray[index] = value;
-    setRecipe(prev => ({ ...prev, [field]: newArray }));
-  };
+  const handleArrayChange = (field, index, value) =>
+    setRecipe((prev) => {
+      const updated = [...prev[field]];
+      updated[index] = value;
+      return { ...prev, [field]: updated };
+    });
 
-  const addArrayField = (field) => {
-    setRecipe(prev => ({ ...prev, [field]: [...prev[field], ''] }));
-  };
+  const addArrayField = (field) =>
+    setRecipe((prev) => ({ ...prev, [field]: [...prev[field], ''] }));
 
-  const removeArrayField = (field, index) => {
-    const newArray = recipe[field].filter((_, i) => i !== index);
-    setRecipe(prev => ({ ...prev, [field]: newArray }));
-  };
+  const removeArrayField = (field, index) =>
+    setRecipe((prev) => ({
+      ...prev,
+      [field]: prev[field].filter((_, i) => i !== index),
+    }));
 
   const handleImageUpload = (info) => {
-  setRecipe(prev => ({
-    ...prev,
-    image: {
-      public_id: info.public_id,
-      url: info.secure_url
-    }
-  }));
-  setUploading(false);
+    setRecipe((prev) => ({
+      ...prev,
+      image: { public_id: info.public_id, url: info.secure_url },
+    }));
+    setUploading(false);
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -93,31 +91,25 @@ export default function AddRecipePage() {
     try {
       const transformed = {
         ...recipe,
-        ingredients: recipe.ingredients.map(item => ({
-          name: item.name,
-          amount: item.amount,
-          unit: item.unit,
-          original: `${item.amount} ${item.unit} ${item.name}`
+        ingredients: recipe.ingredients.map((item) => ({
+          ...item,
+          original: `${item.amount} ${item.unit} ${item.name}`.trim(),
         })),
-        instructions: recipe.instructions.map(text => ({ text })),
+        instructions: recipe.instructions.map((text) => ({ text })),
         creator: session.user.id,
         source: 'user',
-        image: recipe.image
       };
 
-      const response = await axios.post('/api/recipes', transformed);
+      const res = await axios.post('/api/recipes', transformed);
 
-      if (response.data.message === 'Recipe saved successfully') {
+      if (res.data.message === 'Recipe saved successfully') {
         router.push('/your-recipes');
       } else {
-        throw new Error('Failed to save recipe');
+        throw new Error(res.data.error || 'Failed to save recipe');
       }
     } catch (err) {
       console.error(err);
       setError(err.response?.data?.error || 'Failed to save recipe');
-      if (recipe.image?.public_id) {
-        await axios.post('/api/cloudinary/delete', { publicId: recipe.image.public_id });
-      }
     } finally {
       setIsSubmitting(false);
     }
@@ -146,7 +138,7 @@ export default function AddRecipePage() {
     <Container className={`${styles.recipeForm} my-5`}>
       <h1 className="text-center mb-4">Add New Recipe</h1>
       {error && <Alert variant="danger">{error}</Alert>}
-      
+
       <RecipeForm
         recipe={recipe}
         onChange={handleChange}
@@ -161,7 +153,7 @@ export default function AddRecipePage() {
         isSubmitting={isSubmitting}
         uploading={uploading}
         setUploading={setUploading}
-        userId={session?.user?.id}
+        userId={session.user.id}
       />
     </Container>
   );

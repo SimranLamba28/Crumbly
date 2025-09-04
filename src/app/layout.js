@@ -2,7 +2,7 @@
 
 import { Inter } from 'next/font/google';
 import { SessionProvider } from 'next-auth/react';
-import Navbar from '@/components/Navbar';
+import Navbar from '@/components/Navbar/Navbar';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@/styles/globals.css';
 
