@@ -9,10 +9,12 @@ import { useConfirmation } from '../../hooks/useConfirmation';
 import RecipeModal from './RecipeModal';
 import AIChatBox from '../AIChatBox/AIChatBox';
 import RecipeActionButtons from '../Recipe/RecipeActionButtons';
-
+import { useAlert } from '@/hooks/useAlert';
 
 export default function RecipeCard({ recipe, onDelete, isFavorite, onSaveToFavorites}) {
-  //const { data: session } = useSession();
+
+  const { data: session } = useSession();
+  const {showAlert, AlertModal} = useAlert();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showChat, setShowChat] = useState(false);
@@ -37,6 +39,14 @@ export default function RecipeCard({ recipe, onDelete, isFavorite, onSaveToFavor
   };
 
   const handleAIAssistClick = async () => {
+    if(!session?.user?.id){
+      showAlert({
+        title: 'Sign In Required',
+        message: 'Please sign in to use the AI Assistant.',
+        variant: 'info'
+      })
+      return;
+    }
     await fetchRecipeDetails();
     if (!fetchError) {
       setShowChat(!showChat);
@@ -69,6 +79,7 @@ export default function RecipeCard({ recipe, onDelete, isFavorite, onSaveToFavor
           src={recipe.image?.url || recipe.image}
           alt={recipe.title}
           className="recipe-image object-fit-contain"
+          loading="lazy"
         />
         <Card.Body className="recipe-card-content d-flex flex-column">
           <Card.Title>{recipe.title}</Card.Title>
@@ -106,6 +117,7 @@ export default function RecipeCard({ recipe, onDelete, isFavorite, onSaveToFavor
         )} 
 
         <ConfirmationModal />
+        <AlertModal />
       </div>
     </Card>
   );

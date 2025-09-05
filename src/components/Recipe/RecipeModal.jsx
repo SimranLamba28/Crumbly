@@ -7,7 +7,7 @@ import useRecipeExport from '@/hooks/useRecipeExport';
 import ExportDialog from '../RecipeExport/ExportDialog';
 import RecipeExportTemplate from '../RecipeExport/RecipeExportTemplate';
 import '../../styles/RecipeForm.module.css';
-
+import { useSession } from 'next-auth/react';
 import { useRecipeDisplayData } from '@/hooks/useRecipeDisplayData';
 import { useAlert } from '@/hooks/useAlert';
 
@@ -32,6 +32,8 @@ export default function RecipeModal({ recipe, show, onClose, onSaveToFavorites, 
   } = useRecipeDisplayData(recipe);
 
   if (!recipe) return null;
+
+  const {data: session} = useSession();
 
   const showFavoriteButton = !recipe._id;
 
@@ -85,7 +87,17 @@ export default function RecipeModal({ recipe, show, onClose, onSaveToFavorites, 
 
             <Button
               variant="link"
-              onClick={() => setShowExportDialog(true)}
+              onClick={() => {
+                if(!session?.user?.id) {
+                  showAlert({
+                    title: 'Sign In Required',
+                    message: 'Please sign in to download this recipe.',
+                    variant: 'info'
+                  });
+                  return;
+                }
+                setShowExportDialog(true)
+              }}
               className="ms-2"
               disabled={exporting}
             >
