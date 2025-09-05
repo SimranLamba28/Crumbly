@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { Container, Alert, Spinner } from 'react-bootstrap';
-import styles from '@/components/Recipe/RecipeForm.module.css';
+import styles from '@/styles/RecipeForm.module.css';
 import RecipeForm from '@/components/Recipe/RecipeForm';
 
 export default function AddRecipePage() {
