@@ -48,7 +48,7 @@ export default function Home() {
     <div className="container-fluid py-4">
       
       <section className="hero-section text-center mx-auto">
-          <h1 className="hero-title">Welcome to BakeMuse</h1>
+          <h1 className="hero-title">Welcome to Crumbly</h1>
           <p className="hero-subtitle">Find and save your favorite baking recipes!</p>
 
           <form onSubmit={handleSearch} className="search-container d-flex justify-content-center">

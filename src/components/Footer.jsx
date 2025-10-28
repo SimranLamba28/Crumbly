@@ -19,7 +19,7 @@ export default function Footer() {
           </a>
         </div>
         <div className="bm-footer-meta">
-          © {new Date().getFullYear()} BakeMuse &mdash; Made with <span className="bm-footer-heart">♥</span> 
+          © {new Date().getFullYear()} Crumbly &mdash; Made with <span className="bm-footer-heart">♥</span> 
         </div>
       </div>
     </footer> 

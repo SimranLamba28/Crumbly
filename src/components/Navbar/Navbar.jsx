@@ -52,7 +52,7 @@ export default function Navbar() {
         {/* Logo */}
         <div className="bm-left flex-grow-1 text-center text-md-start">
           <Link href="/" onClick={closeAll} className="bm-logo text-decoration-none">
-            <span className="bm-logo-text">BakeMuse</span>
+            <span className="bm-logo-text">Crumbly</span>
           </Link>
         </div>
 
