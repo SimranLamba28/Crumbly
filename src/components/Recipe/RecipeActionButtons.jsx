@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaHeart, FaRegHeart, FaTrash } from 'react-icons/fa';
+import { IoChatboxEllipsesOutline } from "react-icons/io5";
 
 export default function RecipeActionButtons({
   onViewClick,
@@ -37,7 +38,7 @@ export default function RecipeActionButtons({
         onClick={onAIAssistClick}
         disabled={detailsLoading}
       >
-       AI Help
+       <IoChatboxEllipsesOutline />
       </button>
 
       {onDelete && (
