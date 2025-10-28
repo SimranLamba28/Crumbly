@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import RecipeCard from '@/components/Recipe/RecipeCard';
 import { Container, Spinner, Alert } from 'react-bootstrap';
+import '../../styles/userRecipes.css';
 
 export default function YourRecipesPage() {
   const { data: session, status } = useSession();
@@ -72,7 +73,7 @@ export default function YourRecipesPage() {
 
   return (
     <Container className="my-3">
-      <h3 className="mb-4">Your Recipes</h3>
+      <h3 className="userRecipes-title">Your Recipes</h3>
 
       {error && (
         <Alert variant="danger" dismissible onClose={() => setError('')}>
@@ -81,13 +82,14 @@ export default function YourRecipesPage() {
       )}
       
       {recipes.length === 0 && !error ? (
-        <Alert variant="info">
-          You havent added any recipes yet. <a href="/add">Create your first recipe!</a>
-        </Alert>
+       <div className="userRecipes-empty text-center">
+        <p>You have not added any recipes yet.</p>
+        <a href="/add" className='btn-link'>Create your first recipe!</a>
+        </div>
       ) : (
-        <div className="row">
+        <div className="row userRecipes-grid g-3">
           {recipes.map(recipe => (
-            <div key={recipe._id} className="col-md-6 col-lg-4 mb-4">
+            <div key={recipe._id} className="userRecipes-card col-6 col-md-4 col-lg-2-4 d-flex justify-content-center">
               <RecipeCard 
                 recipe={recipe}
                 onDelete={handleDelete}

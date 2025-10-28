@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button } from 'react-bootstrap';
-import { FaHeart, FaRegHeart, FaEye, FaCommentAlt, FaTrash } from 'react-icons/fa';
+import { FaHeart, FaRegHeart, FaTrash } from 'react-icons/fa';
 
 export default function RecipeActionButtons({
   onViewClick,
@@ -14,47 +13,41 @@ export default function RecipeActionButtons({
 }) {
   return (
     <>
-      <Button
-        className="view-btn me-2"
+      <button
+        className="view-btn"
         onClick={onViewClick}
         disabled={detailsLoading}
       >
-        <FaEye /> View
-      </Button>
+         View
+      </button>
 
       {showFavoriteButton && (
-        <Button
-          variant={isFavorite ? "danger" : "outline-danger"}
-          className={`favorite-btn ${isFavorite ? 'favorited' : ''} me-2`}
+        <button
+          className={`favorite-btn ${isFavorite ? 'favorited' : ''}`}
           onClick={() => onSaveToFavorites()}
           disabled={detailsLoading}
         >
           {isFavorite ? <FaHeart /> : <FaRegHeart />}
           
-        </Button>
+        </button>
       )}
 
-      <Button
-        className="ai-assist-btn me-2"
+      <button
+        className="ai-assist-btn "
         onClick={onAIAssistClick}
         disabled={detailsLoading}
       >
-        <FaCommentAlt /> AI Help
-      </Button>
+       AI Help
+      </button>
 
       {onDelete && (
-        <Button
+        <button
           onClick={onDelete}
           disabled={deleting}
-          size='sm'
-          className='mt-2'
-          variant="outline-secondary"
+          className='delete-btn'
         >
-          {deleting ? (
-            <span>Deleting...</span>
-          ) : <FaTrash className="me-1" />
-          }
-        </Button>
+          <FaTrash />
+        </button>
       )}
     </>
   );

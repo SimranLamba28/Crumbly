@@ -19,7 +19,6 @@ async function connect() {
 
   try {
     cached.conn = await cached.promise;
-    console.log('MongoDB Connected');
   } catch (error) {
     console.error('MongoDB Connection Error:', error);
     cached.promise = null;

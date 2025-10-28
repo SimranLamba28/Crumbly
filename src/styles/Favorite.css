@@ -1,0 +1,32 @@
+.favorites-title {
+  font-family: var(--font-accent);
+  font-size: 1.45rem;
+  color: var(--color-primary);
+  text-align: center;
+}
+
+.favorites-empty {
+  padding: 3rem 1rem;
+  color: var(--color-text-light);
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+}
+
+.favorites-grid {
+  margin-top: 0.5rem;
+}
+
+@media (max-width: 575px) {
+  .favorites-title {
+    font-size: 1.15rem;
+    margin-bottom: 1rem;
+  }
+  .favorites-card-col {
+    min-width: 180px;
+    margin-bottom: 1rem;
+  }
+   .favorites-empty {
+    padding: 2rem 0.5rem;
+  }
+}
+

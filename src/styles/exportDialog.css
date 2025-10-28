@@ -1,16 +1,132 @@
 .export-dialog-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.4);
+  inset: 0;
+  background: rgba(255, 243, 239, 0.55);
+  backdrop-filter: blur(6px);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1060;
-  animation: fadeIn 0.3s ease;
-  backdrop-filter: blur(2px);
+  animation: fadeIn 0.4s ease;
+}
+
+.export-dialog {
+  background: #fffdf9;
+  border-radius: 20px;
+  box-shadow: 0 6px 25px rgba(207, 180, 155, 0.25);
+  width: 88%;
+  max-width: 420px;
+  transform-origin: center;
+  animation: scaleIn 0.25s cubic-bezier(0.215, 0.61, 0.355, 1);
+  overflow: hidden;
+  border: 1px solid rgba(255, 210, 194, 0.4);
+}
+
+.export-dialog-header {
+  background: linear-gradient(135deg, #cfa07b, #e8c8ad);
+  color: #fffaf5;
+  padding: 14px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 2px 6px rgba(207, 180, 155, 0.25);
+}
+
+.export-dialog-header h3 {
+  font-size: 1.1rem;
+  font-family: var(--font-accent);
+  letter-spacing: 0.2px;
+}
+
+.export-close-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: #fffdf9;
+  font-size: 1rem;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.25s ease, transform 0.2s ease;
+}
+
+.export-close-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: rotate(15deg);
+}
+
+.export-dialog-body {
+  padding: 24px;
+  text-align: center;
+  background: #fffdf9;
+}
+
+.export-dialog-body p {
+  color: #a78c80;
+  margin-bottom: 18px;
+  font-size: 0.95rem;
+}
+
+.export-options {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.export-option-btn {
+  background: #ffffff;
+  border: 1.4px solid rgba(255, 194, 185, 0.5);
+  border-radius: 14px;
+  padding: 18px;
+  transition: all 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(255, 219, 209, 0.2);
+}
+
+.export-option-btn:hover {
+  transform: translateY(-3px);
+  background: #fff7f3;
+  border-color: #f3c5a8;
+  box-shadow: 0 6px 15px rgba(255, 210, 190, 0.35);
+}
+
+.export-icon {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.pdf-icon {
+  background: rgba(255, 182, 193, 0.25);
+  color: #d87a8a;
+}
+
+.image-icon {
+  background: rgba(184, 231, 204, 0.25);
+  color: #8a9d7f;
+}
+
+.export-option-btn span {
+  font-weight: 600;
+  color: #6b5445;
+  margin-top: 4px;
+  font-size: 0.95rem;
+}
+
+.export-option-btn small {
+  color: #af9687;
+  font-size: 0.8rem;
 }
 
 @keyframes fadeIn {
@@ -18,134 +134,17 @@
   to { opacity: 1; }
 }
 
-.export-dialog {
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-  width: 90%;
-  max-width: 450px;
-  overflow: hidden;
-  transform-origin: center;
-  animation: scaleIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  will-change: transform, opacity;
-}
-
 @keyframes scaleIn {
-  from { transform: scale(0.9); opacity: 0; }
+  from { transform: scale(0.92); opacity: 0; }
   to { transform: scale(1); opacity: 1; }
 }
 
-.export-dialog-header {
-  background: var(--primary);
-  padding: 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.export-dialog-header h3 {
-  margin: 0;
-  color: white;
-  font-size: 1.3rem;
-}
-
-.export-close-btn {
-  background: transparent;
-  border: none;
-  color: white;
-  font-size: 1.2rem;
-  cursor: pointer;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background 0.2s;
-}
-
-.export-close-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.export-dialog-body {
-  padding: 25px;
-}
-
-.export-dialog-body p {
-  margin-bottom: 20px;
-  color: var(--text-light);
-  text-align: center;
-}
-
-.export-options {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-.export-option-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  background: white;
-  border: 2px solid var(--background);
-  border-radius: 12px;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  text-align: center;
-  width: 100%;
-}
-
-.export-option-btn:hover {
-  transform: translateY(-3px);
-  border-color: var(--primary);
-  box-shadow: 0 5px 15px rgba(255, 194, 209, 0.3);
-}
-
-.export-option-btn span {
-  font-weight: 600;
-  color: var(--text);
-  margin-top: 10px;
-}
-
-.export-option-btn small {
-  color: var(--text-light);
-  font-size: 0.85rem;
-}
-
-.export-icon {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 10px;
-  position: relative;
-}
-
-.pdf-icon {
-  background: rgba(255, 114, 133, 0.15); 
-}
-
-.pdf-icon::after {
-  content: "PDF";
-  position: absolute;
-  font-weight: bold;
-  color: var(--error);
-  font-size: 1rem;
-}
-
-.image-icon {
-  background: rgba(168, 230, 207, 0.15); 
-}
-
-.image-icon::after {
-  content: "JPG";
-  position: absolute;
-  font-weight: bold;
-  color: var(--success);
-  font-size: 1rem;
+@media (max-width: 480px) {
+  .export-dialog {
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(205, 172, 148, 0.25);
+  }
+  .export-dialog-header {
+    padding: 12px 16px;
+  }
 }

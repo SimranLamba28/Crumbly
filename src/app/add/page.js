@@ -5,7 +5,8 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import { Container, Alert, Spinner } from 'react-bootstrap';
-import styles from '@/styles/RecipeForm.module.css';
+
+
 import RecipeForm from '@/components/Recipe/RecipeForm';
 
 export default function AddRecipePage() {
@@ -135,8 +136,8 @@ export default function AddRecipePage() {
   }
 
   return (
-    <Container className={`${styles.recipeForm} my-5`}>
-      <h1 className="text-center mb-4">Add New Recipe</h1>
+    <Container className= 'recipeForm my-5'>
+      <h2 className="addHeading text-center mb-4">Add New Recipe</h2>
       {error && <Alert variant="danger">{error}</Alert>}
 
       <RecipeForm

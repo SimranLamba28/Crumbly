@@ -43,8 +43,10 @@ const RecipeExportTemplate = ({ recipe, exportRef }) => {
           <ul className="ingredient-list">
             {ingredients.map((ing, i) => (
               <li key={i} className="ingredient-item">
-                <FaChevronRight className="ingredient-bullet" />
-                <span className="ingredient-text">{ing.original || `${ing.amount} ${ing.unit} ${ing.name}`}</span>
+                <span className='ingredient-group'>
+                  <FaChevronRight className="ingredient-bullet" />
+                  <span className="ingredient-text">{ing.original || `${ing.amount} ${ing.unit} ${ing.name}`}</span>
+                </span>
               </li>
             ))}
           </ul>
@@ -66,7 +68,7 @@ const RecipeExportTemplate = ({ recipe, exportRef }) => {
       </div>
 
       <div className="export-footer">
-        <p>Generated with ❤️ by Baking Assistant</p>
+        <p>Generated with ❤️</p>
       </div>
     </div>
   );

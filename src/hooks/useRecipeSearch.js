@@ -27,6 +27,7 @@ export const useRecipeSearch = (apiKey) => {
           query: q,
           apiKey: apiKey,
           number: 50,
+          type: "dessert",
           addRecipeInformation: true,
           includeNutrition: false,
           instructionsRequired: true
@@ -36,7 +37,7 @@ export const useRecipeSearch = (apiKey) => {
       setRecipes(results);
       setNoResults(results.length === 0);
     } catch (err) {
-      console.error("Search error:", err.response?.data || err.message);
+      console.log("Search error:", err.response?.data || err.message);
       setError(err);
       setRecipes([]);
       setNoResults(true);

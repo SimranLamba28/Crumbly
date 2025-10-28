@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
 import { Container, Alert, Spinner } from 'react-bootstrap';
 import RecipeCard from '@/components/Recipe/RecipeCard';
-
+import '../../styles/favorite.css';
 
 export default function FavoritesPage() {
   const { data: session, status} = useSession();
@@ -70,18 +70,18 @@ export default function FavoritesPage() {
   }
   return (
     <Container className="my-3">
-      <h3 className="mb-4">My Favorite Recipes</h3>
+      <h3 className="favorites-title">My Favorite Recipes</h3>
       
       {error && <Alert variant="danger">{error}</Alert>}
       
       {favorites.length === 0 ? (
-        <div className="text-center py-5">
+        <div className="favorites-empty text-center">
           <p>You haven&rsquo;t saved any recipes yet!</p>
         </div>
       ) : (
-        <div className="row">
+        <div className="row favorites-grid g-3">
           {favorites.map(fav => (
-            <div key={fav.recipeId} className="col-md-6 col-lg-4 mb-4">
+            <div key={fav.recipeId} className="favorites-card col-6 col-md-4 col-lg-2-4 d-flex justify-content-center ">
               <RecipeCard
                 recipe={{
                   id: fav.recipeId,

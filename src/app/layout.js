@@ -3,6 +3,7 @@
 import { Inter } from 'next/font/google';
 import { SessionProvider } from 'next-auth/react';
 import Navbar from '@/components/Navbar/Navbar';
+import Footer from '@/components/Footer';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '@/styles/globals.css';
 
@@ -17,9 +18,7 @@ export default function RootLayout({ children, session }) {
           <main className="main-content container py-4">
             {children}
           </main>
-          <footer className="footer py-3">
-            <p>© {new Date().getFullYear()} BakeMuse - Created with 🧁</p>
-          </footer>
+          <Footer />
         </SessionProvider>
       </body>
     </html>

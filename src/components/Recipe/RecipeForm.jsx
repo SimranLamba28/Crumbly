@@ -3,6 +3,7 @@
 import { Form, Button, Spinner, Row, Col } from "react-bootstrap";
 import { CldUploadWidget } from "next-cloudinary";
 import { FaUpload } from "react-icons/fa";
+import "../../styles/RecipeForm.css";
 
 export default function RecipeForm({
   recipe,
@@ -21,9 +22,11 @@ export default function RecipeForm({
   userId,
 }) {
   return (
-    <Form onSubmit={onSubmit} className="p-4 shadow-sm rounded bg-white">
-      <h4 className="mb-4">Add a New Recipe</h4>
-
+    <Form
+      onSubmit={onSubmit}
+      className="recipeForm p-4 p-md-5 mx-auto rounded-4 shadow-sm bg-white"
+    >
+      {/* Title */}
       <Form.Group className="mb-3">
         <Form.Label>Title</Form.Label>
         <Form.Control
@@ -36,6 +39,7 @@ export default function RecipeForm({
         />
       </Form.Group>
 
+      {/* Description */}
       <Form.Group className="mb-4">
         <Form.Label>Description</Form.Label>
         <Form.Control
@@ -48,10 +52,9 @@ export default function RecipeForm({
         />
       </Form.Group>
 
-      {/* Prep Time, Cook Time, Servings, Difficulty */}
-
-      <Row className="mb-4">
-        <Col md={3}>
+      {/* Timing & Serving Details */}
+      <Row className="mb-4 gy-2 gx-2">
+        <Col xs={12} md={3}>
           <Form.Group>
             <Form.Label>Prep Time (min)</Form.Label>
             <Form.Control
@@ -63,7 +66,8 @@ export default function RecipeForm({
             />
           </Form.Group>
         </Col>
-        <Col md={3}>
+
+        <Col xs={12} md={3}>
           <Form.Group>
             <Form.Label>Cook Time (min)</Form.Label>
             <Form.Control
@@ -75,7 +79,8 @@ export default function RecipeForm({
             />
           </Form.Group>
         </Col>
-        <Col md={3}>
+
+        <Col xs={12} md={3}>
           <Form.Group>
             <Form.Label>Servings</Form.Label>
             <Form.Control
@@ -87,7 +92,8 @@ export default function RecipeForm({
             />
           </Form.Group>
         </Col>
-        <Col md={3}>
+
+        <Col xs={12} md={3}>
           <Form.Group>
             <Form.Label>Difficulty</Form.Label>
             <Form.Select
@@ -104,20 +110,21 @@ export default function RecipeForm({
       </Row>
 
       {/* Ingredients */}
-
       <Form.Group className="mb-4">
         <Form.Label>Ingredients</Form.Label>
         {recipe.ingredients.map((ing, idx) => (
-          <Row key={idx} className="align-items-center mb-2">
+          <Row key={idx} className="align-items-center mb-2 g-2">
             <Col>
               <Form.Control
                 placeholder="Ingredient (e.g., Sugar)"
                 value={ing.name}
-                onChange={(e) => onIngredientChange(idx, "name", e.target.value)}
+                onChange={(e) =>
+                  onIngredientChange(idx, "name", e.target.value)
+                }
                 required={idx === 0}
               />
             </Col>
-            <Col md={3}>
+            <Col xs={6} md={3}>
               <Form.Control
                 type="number"
                 placeholder="Amount"
@@ -128,11 +135,13 @@ export default function RecipeForm({
                 min={0}
               />
             </Col>
-            <Col md={3}>
+            <Col xs={6} md={3}>
               <Form.Control
                 placeholder="Unit (g, cups, tsp)"
                 value={ing.unit}
-                onChange={(e) => onIngredientChange(idx, "unit", e.target.value)}
+                onChange={(e) =>
+                  onIngredientChange(idx, "unit", e.target.value)
+                }
               />
             </Col>
             <Col xs="auto">
@@ -141,6 +150,7 @@ export default function RecipeForm({
                   variant="outline-danger"
                   size="sm"
                   onClick={() => removeIngredientField(idx)}
+                  className="rounded-pill"
                 >
                   ✕
                 </Button>
@@ -152,46 +162,47 @@ export default function RecipeForm({
           variant="outline-primary"
           size="sm"
           onClick={addIngredientField}
+          className="rounded-pill"
         >
           + Add Ingredient
         </Button>
       </Form.Group>
 
       {/* Instructions */}
-      
       <Form.Group className="mb-4">
         <Form.Label>Instructions</Form.Label>
         {recipe.instructions.map((instr, idx) => (
-          <Row key={idx} className="mb-3">
+          <Row key={idx} className="mb-2 g-2">
             <Col>
-            <Form.Control
-              as="textarea"
-              value={instr}
-              onChange={(e) =>
-                onArrayChange("instructions", idx, e.target.value)
-              }
-              rows={1}
-              placeholder={`Step ${idx + 1}`}
-              required={idx === 0}
-            />
+              <Form.Control
+                as="textarea"
+                value={instr}
+                onChange={(e) =>
+                  onArrayChange("instructions", idx, e.target.value)
+                }
+                rows={1}
+                placeholder={`Step ${idx + 1}`}
+                required={idx === 0}
+              />
             </Col>
             <Col xs="auto">
-            {idx > 0 && (
-              <Button
-                variant="outline-danger"
-                size="sm"
-                className="mt-1"
-                onClick={() => removeArrayField("instructions", idx)}
-              >
-                ✕
-              </Button>
-            )}
+              {idx > 0 && (
+                <Button
+                  variant="outline-danger"
+                  size="sm"
+                  className="rounded-pill"
+                  onClick={() => removeArrayField("instructions", idx)}
+                >
+                  ✕
+                </Button>
+              )}
             </Col>
           </Row>
         ))}
         <Button
           variant="outline-primary"
           size="sm"
+          className="rounded-pill"
           onClick={() => addArrayField("instructions")}
         >
           + Add Step
@@ -202,7 +213,7 @@ export default function RecipeForm({
       <Form.Group className="mb-4">
         <Form.Label>Tags</Form.Label>
         {recipe.tags.map((tag, idx) => (
-          <Row key={idx} className="mb-2 align-items-center">
+          <Row key={idx} className="mb-2 g-2 align-items-center">
             <Col>
               <Form.Control
                 placeholder="e.g., Vegan, Gluten-Free"
@@ -215,6 +226,7 @@ export default function RecipeForm({
                 <Button
                   variant="outline-danger"
                   size="sm"
+                  className="rounded-pill"
                   onClick={() => removeArrayField("tags", idx)}
                 >
                   ✕
@@ -226,13 +238,14 @@ export default function RecipeForm({
         <Button
           variant="outline-primary"
           size="sm"
+          className="rounded-pill"
           onClick={() => addArrayField("tags")}
         >
           + Add Tag
         </Button>
       </Form.Group>
 
-      {/* Image */}
+      {/* Image Upload */}
       <Form.Group className="mb-4">
         <Form.Label>Recipe Image</Form.Label>
         <CldUploadWidget
@@ -258,24 +271,22 @@ export default function RecipeForm({
               <Button
                 type="button"
                 variant="outline-primary"
-                onClick={() => open()}
+                className="rounded-pill mx-2"
+                onClick={() => open && open()}
                 disabled={uploading}
               >
                 <FaUpload className="me-1" />
                 {uploading ? "Uploading..." : "Upload Image"}
               </Button>
-              {uploading && (
-                <Spinner animation="border" size="sm" className="ms-2" />
-              )}
+              {uploading && <Spinner animation="border" size="sm" />}
             </>
           )}
         </CldUploadWidget>
-
         {recipe.image?.url && (
           <img
             src={recipe.image.url}
             alt="Preview"
-            className="img-thumbnail mt-2"
+            className="img-thumbnail rounded-2"
             style={{ maxHeight: "120px" }}
           />
         )}
@@ -286,7 +297,7 @@ export default function RecipeForm({
         variant="primary"
         type="submit"
         disabled={isSubmitting}
-        className="w-100 py-2"
+        className="w-100 py-2 rounded-pill"
       >
         {isSubmitting ? (
           <>

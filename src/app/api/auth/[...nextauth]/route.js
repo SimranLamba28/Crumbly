@@ -32,19 +32,14 @@ export const authOptions = {
       await connect();
        const { email, name, image } = user;
       const existingUser = await User.findOne({ email});
-      if (!existingUser) {
-        console.log('Creating new user in DB:', user);
-  
-        await User.create({ email, name, image });
-      } else {
-        console.log('User already exists in DB:', existingUser);
-      }
 
+      if (!existingUser) {
+        await User.create({ email, name, image });
+      } 
       return true;
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
-  debug: true, //remove
 };
 
 const handler = NextAuth(authOptions);

@@ -72,8 +72,7 @@ export default function RecipeCard({ recipe, onDelete, isFavorite, onSaveToFavor
   };
 
   return (
-    <Card className="recipe-card h-100 shadow-sm overflow-hidden">
-      <div className="position-relative overflow-hidden">
+    <Card className="recipe-card h-100 shadow-sm overflow-hidden d-flex flex-column">
         <Card.Img
           variant='top'
           src={recipe.image?.url || recipe.image}
@@ -81,10 +80,10 @@ export default function RecipeCard({ recipe, onDelete, isFavorite, onSaveToFavor
           className="recipe-image object-fit-contain"
           loading="lazy"
         />
-        <Card.Body className="recipe-card-content d-flex flex-column">
-          <Card.Title>{recipe.title}</Card.Title>
+        <Card.Body className="recipe-card-content d-flex flex-column flex-grow-1">
+          <Card.Title className='card-title text center'>{recipe.title}</Card.Title>
 
-          <div className="recipe-card-actions mt-auto">
+          <Card.Footer className='recipe-card-actions d-flex justify-content-between align-items-center'>
             <RecipeActionButtons
               onViewClick={handleViewClick}
               onAIAssistClick={handleAIAssistClick}
@@ -95,7 +94,7 @@ export default function RecipeCard({ recipe, onDelete, isFavorite, onSaveToFavor
               detailsLoading={detailsLoading}
               deleting={deleting}
             />
-          </div>
+          </Card.Footer>
         </Card.Body>
 
         {isModalOpen && recipeDetails && (
@@ -118,7 +117,6 @@ export default function RecipeCard({ recipe, onDelete, isFavorite, onSaveToFavor
 
         <ConfirmationModal />
         <AlertModal />
-      </div>
     </Card>
   );
 }

@@ -8,9 +8,8 @@ import { useRecipeSearch } from '@/hooks/useRecipeSearch';
 import { useFavorites } from '@/hooks/useFavorites';
 import { useAlert } from '@/hooks/useAlert';
 
-
 export default function Home() {
-  const { data: session} = useSession();
+  const { data: session } = useSession();
   const { showAlert, AlertModal } = useAlert();
 
   const {
@@ -46,77 +45,91 @@ export default function Home() {
   ];
 
   return (
-    <div className="container py-4">
-      <div className="hero-section">
-        <h1 className="hero-title">Welcome to BakeMuse</h1>
-        <p className="hero-subtitle">Find and save your favorite baking recipes!</p>
+    <div className="container-fluid py-4">
+      
+      <section className="hero-section text-center mx-auto">
+          <h1 className="hero-title">Welcome to BakeMuse</h1>
+          <p className="hero-subtitle">Find and save your favorite baking recipes!</p>
 
-        <form onSubmit={handleSearch} className="search-container">
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search for cupcakes, cookies, or any recipe..."
-            className="search-input"
-          />
-          <button type="submit" className="search-button" disabled={searchLoading}>
-            {searchLoading ? 'Searching...' : <><FaSearch /> Search</>}
-          </button>
-        </form>
-
-        <div className="quick-categories">
-          {categories.map((cat, index) => (
-            <button 
-            key={index} 
-            className='category-pill' 
-            onClick={() => handleQuickSearch(cat.name)}
-            type='button'>
-              {cat.icon || cat.emoji} {cat.name[0].toUpperCase() + cat.name.slice(1)}
+          <form onSubmit={handleSearch} className="search-container d-flex justify-content-center">
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search for cupcakes, cookies, or any recipe..."
+              className="form-control search-input"
+            />
+            <button
+              type="submit"
+              className="search-button ms-2"
+              disabled={searchLoading}
+            >
+              {searchLoading ? 'Searching...' : <><FaSearch /> Search</>}
             </button>
-          ))}
-        </div>
-      </div>
+          </form>
 
-      <div className="recipe-section">
+          <div className="quick-categories d-flex flex-wrap justify-content-center mt-3">
+            {categories.map((cat, index) => (
+              <button
+                key={index}
+                type="button"
+                className="btn category-pill m-1"
+                onClick={() => handleQuickSearch(cat.name)}
+              >
+                {cat.icon || cat.emoji} {cat.name[0].toUpperCase() + cat.name.slice(1)}
+              </button>
+            ))}
+          </div>
+      </section>
+
+      <section className="recipe-section container">
         {recipes.length > 0 && (
-          <h2 className="section-title">
+          <h2 className="section-title text-center">
             {searchQuery ? `Results for "${searchQuery}"` : 'Popular Recipes'}
           </h2>
         )}
 
         {searchLoading ? (
-          <div className="loading-container">
-            <div className="loading-spinner"></div>
+          <div className="loading-container text-center">
+            <div className="loading-spinner mx-auto"></div>
             <p>Searching for delicious recipes...</p>
           </div>
         ) : (
-          <div className="recipe-list">
+          <div className="row g-3 recipe-list justify-content-center">
             {recipes.map((recipe) => (
-              <RecipeCard
+              <div
                 key={recipe.id}
-                recipe={recipe}
-                onSaveToFavorites={() => handleSaveToFavorites(recipe)}
-                isFavorite={!!favorites[recipe.id]}
-              />
+                className="col-6 col-md-4 col-lg-2-4 d-flex justify-content-center"
+              >
+                <RecipeCard
+                  recipe={recipe}
+                  onSaveToFavorites={() => handleSaveToFavorites(recipe)}
+                  isFavorite={!!favorites[recipe.id]}
+                />
+              </div>
             ))}
           </div>
         )}
 
         {noResults && !searchLoading && (
-          <div className="empty-state">
+          <div className="empty-state text-center">
             <p>No recipes found for {searchQuery}. Try a different search term!</p>
-            <p className="empty-caption">Perhaps adjust your keywords or click one of the categories above.</p>
+            <p className="empty-caption">
+              Perhaps adjust your keywords or click one of the categories above.
+            </p>
           </div>
         )}
 
         {recipes.length === 0 && !searchLoading && !noResults && (
-          <div className="empty-state">
-            <div className="empty-state-icon">🧁</div>
+          <div className="empty-state text-center">
+            <div className="empty-state-icon"></div>
             <p>Search for recipes to get started!</p>
-            <p className="empty-caption">Try searching for brownie, cupcake, or click one of the categories above</p>
+            <p className="empty-caption">
+              Try searching for brownie, cupcake, or click one of the categories above
+            </p>
           </div>
         )}
-      </div>
+      </section>
 
       <AlertModal />
     </div>

@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 import { FaHeart, FaRegHeart, FaTimes, FaDownload } from 'react-icons/fa';
-import { Modal, Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 import useRecipeExport from '@/hooks/useRecipeExport';
 import ExportDialog from '../RecipeExport/ExportDialog';
 import RecipeExportTemplate from '../RecipeExport/RecipeExportTemplate';
-import '../../styles/RecipeForm.module.css';
+import '../../styles/recipeModal.css';
 import { useSession } from 'next-auth/react';
 import { useRecipeDisplayData } from '@/hooks/useRecipeDisplayData';
 import { useAlert } from '@/hooks/useAlert';
@@ -33,8 +33,7 @@ export default function RecipeModal({ recipe, show, onClose, onSaveToFavorites, 
 
   if (!recipe) return null;
 
-  const {data: session} = useSession();
-
+  const { data: session } = useSession();
   const showFavoriteButton = !recipe._id;
 
   const handleDownload = async (type) => {
@@ -51,7 +50,7 @@ export default function RecipeModal({ recipe, show, onClose, onSaveToFavorites, 
       showAlert({
         title: 'Download Failed',
         message: 'There was an error while downloading the recipe. Please try again.',
-        variant: 'danger'
+        variant: 'danger',
       });
     } finally {
       setExporting(false);
@@ -72,33 +71,35 @@ export default function RecipeModal({ recipe, show, onClose, onSaveToFavorites, 
           pointerEvents: showExportDialog ? 'none' : 'auto',
         }}
       >
+
         <Modal.Header className="border-0 position-relative">
           <Modal.Title>{title}</Modal.Title>
 
           <div className="position-absolute end-0 top-0 d-flex align-items-center">
-            { showFavoriteButton &&
-            <Button
-              variant="link"
-              onClick={onSaveToFavorites}
-              className={`favorite-btn ${isFavorite ? 'text-danger' : 'text-secondary'}`}
-            >
-              {isFavorite ? <FaHeart size={20} /> : <FaRegHeart size={20} />}
-            </Button> }
+            {showFavoriteButton && (
+              <button
+                type="button"
+                onClick={onSaveToFavorites}
+                className={`btn btn-link favorite-btn ${isFavorite ? 'fav' : ''}`}
+              >
+                {isFavorite ? <FaHeart size={20} /> : <FaRegHeart size={20} />}
+              </button>
+            )}
 
-            <Button
-              variant="link"
+            <button
+              type="button"
               onClick={() => {
-                if(!session?.user?.id) {
+                if (!session?.user?.id) {
                   showAlert({
                     title: 'Sign In Required',
                     message: 'Please sign in to download this recipe.',
-                    variant: 'info'
+                    variant: 'info',
                   });
                   return;
-                }
-                setShowExportDialog(true)
+                } 
+                setShowExportDialog(true);
               }}
-              className="ms-2"
+              className="btn btn-link ms-2"
               disabled={exporting}
             >
               {exporting ? (
@@ -106,16 +107,17 @@ export default function RecipeModal({ recipe, show, onClose, onSaveToFavorites, 
                   <span className="visually-hidden">Loading...</span>
                 </div>
               ) : (
-                <FaDownload size={20} className="text-primary" />
+                <FaDownload size={20} />
               )}
-            </Button>
+            </button>
 
-            <Button variant="link" onClick={onClose} className="close-button ms-2">
+            <button type="button" onClick={onClose} className="btn btn-link close-button ms-2">
               <FaTimes size={24} />
-            </Button>
+            </button>
           </div>
         </Modal.Header>
 
+  
         <Modal.Body className="p-4">
           {image && (
             <div className="recipe-modal-image mb-4 rounded-3 overflow-hidden">
@@ -131,9 +133,10 @@ export default function RecipeModal({ recipe, show, onClose, onSaveToFavorites, 
           <div className="recipe-modal-info">
             <div className="recipe-time-info mb-4 p-3 bg-light rounded-3">
               {!userRecipe && (
-              <p className="mb-1">
-                <strong>Ready in:</strong> {totalTime} mins
-              </p> )}
+                <p className="mb-1">
+                  <strong>Ready in:</strong> {totalTime} mins
+                </p>
+              )}
 
               {userRecipe ? (
                 <p className="mb-1">
@@ -174,13 +177,14 @@ export default function RecipeModal({ recipe, show, onClose, onSaveToFavorites, 
               <div className="recipe-instructions col-md-6">
                 <h3 className="h4 mb-3">Instructions</h3>
                 {instructions.length > 0 ? (
-                  <ol className="ps-3">
-                    {instructions.map((step) => (
+                  <ul className="ps-0 list-unstyled">
+                    {instructions.map((step, i) => (
                       <li key={step.number} className="mb-2">
+                        <span className='step-circle me-2'>{i+1}</span>
                         {step.step}
                       </li>
                     ))}
-                  </ol>
+                  </ul>
                 ) : (
                   <p>No instructions provided.</p>
                 )}
@@ -189,7 +193,7 @@ export default function RecipeModal({ recipe, show, onClose, onSaveToFavorites, 
           </div>
         </Modal.Body>
       </Modal>
-
+      
       {showExportDialog && (
         <ExportDialog
           onClose={() => setShowExportDialog(false)}
@@ -208,7 +212,7 @@ export default function RecipeModal({ recipe, show, onClose, onSaveToFavorites, 
       >
         <RecipeExportTemplate recipe={recipe} exportRef={exportRef} />
       </div>
-      
+
       <AlertModal />
     </>
   );
