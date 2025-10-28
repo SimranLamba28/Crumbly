@@ -3,7 +3,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useSession } from 'next-auth/react';
 import { Container, Alert, Spinner } from 'react-bootstrap';
 import RecipeCard from '@/components/Recipe/RecipeCard';
-import '../../styles/favorite.css';
+import '../../styles/Favorite.css';
 
 export default function FavoritesPage() {
   const { data: session, status} = useSession();
