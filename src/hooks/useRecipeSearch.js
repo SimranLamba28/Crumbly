@@ -22,15 +22,10 @@ export const useRecipeSearch = (apiKey) => {
     setError(null);
     setNoResults(false);
     try {
-      const response = await axios.get(`https://api.spoonacular.com/recipes/complexSearch`, {
+      const response = await axios.get('/api/spoonacular', {
         params: {
           query: q,
-          apiKey: apiKey,
-          number: 50,
-          type: "dessert",
-          addRecipeInformation: true,
-          includeNutrition: false,
-          instructionsRequired: true
+          type: 'search',
         }
       });
       const results = response.data.results;
@@ -44,7 +39,7 @@ export const useRecipeSearch = (apiKey) => {
     } finally {
       setLoading(false);
     }
-  }, [searchQuery, apiKey]);
+  }, [searchQuery]);
 
   const handleQuickSearch = useCallback((category) => {
     setSearchQuery(category);

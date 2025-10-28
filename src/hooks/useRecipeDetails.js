@@ -14,10 +14,10 @@ export const useRecipeDetails = (recipe) => {
     try {
       const response = recipe._id
         ? await axios.get(`/api/recipes?id=${recipe._id}`)
-        : await axios.get(`https://api.spoonacular.com/recipes/${recipe.id}/information`, {
+        : await axios.get(`/api/spoonacular`, {
             params: {
-              apiKey: process.env.NEXT_PUBLIC_SPOONACULAR_API_KEY,
-              includeNutrition: false
+              id: recipe.id,
+              type: 'details'
             }
           });
       const data = response.data;
