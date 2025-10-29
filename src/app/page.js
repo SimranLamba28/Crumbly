@@ -99,7 +99,7 @@ export default function Home() {
             {recipes.map((recipe) => (
               <div
                 key={recipe.id}
-                className="col-6 col-md-4 col-lg-2-4 d-flex justify-content-center"
+                className="col-6 col-md-4 col-lg-2-4 d-flex"
               >
                 <RecipeCard
                   recipe={recipe}
