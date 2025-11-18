@@ -39,19 +39,6 @@ export default function RecipeForm({
         />
       </Form.Group>
 
-      {/* Description */}
-      <Form.Group className="mb-4">
-        <Form.Label>Description</Form.Label>
-        <Form.Control
-          as="textarea"
-          name="description"
-          value={recipe.description}
-          onChange={onChange}
-          rows={2}
-          placeholder="Brief description of your recipe"
-        />
-      </Form.Group>
-
       {/* Timing & Serving Details */}
       <Row className="mb-4 gy-2 gx-2">
         <Col xs={12} md={3}>

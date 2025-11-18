@@ -23,7 +23,8 @@ export const useRecipeDisplayData = (recipe) => {
     const servings = recipe.servings || 0;
     const difficulty = recipe.difficulty || '—';
     const image = recipe.image?.url || recipe.image;
-    const badges = userRecipe ? (recipe.tags || []) : (recipe.diets || []);
+    const badges = userRecipe ? (recipe.tags || []).filter(tag => String(tag).trim() !== "") : (recipe.diets || []);
+
 
     const ingredients = recipe.extendedIngredients || recipe.ingredients || [];
 

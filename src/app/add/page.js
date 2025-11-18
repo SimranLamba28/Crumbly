@@ -3,10 +3,10 @@
 import { useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { validateRecipeFields } from '@/lib/validateRecipe';
+import { useAlert } from '@/hooks/useAlert';
 import axios from 'axios';
 import { Container, Alert, Spinner } from 'react-bootstrap';
-
-
 import RecipeForm from '@/components/Recipe/RecipeForm';
 
 export default function AddRecipePage() {
@@ -15,7 +15,6 @@ export default function AddRecipePage() {
 
   const [recipe, setRecipe] = useState({
     title: '',
-    description: '',
     ingredients: [{ name: '', amount: '', unit: '' }],
     instructions: [''],
     prepTime: 15,
@@ -29,6 +28,8 @@ export default function AddRecipePage() {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const { showAlert, AlertModal } = useAlert();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -85,6 +86,20 @@ export default function AddRecipePage() {
       setError('Please sign in to add recipes');
       return;
     }
+    
+    // Validation
+    const validationErrors = validateRecipeFields({
+      ...recipe,
+      instructions: recipe.instructions.map((i) => i),
+    });
+    
+    if (validationErrors.length > 0) {
+      showAlert({
+        title: 'Missing or Invalid Fields',
+        message: validationErrors[0]
+      });
+      return;
+    }
 
     setIsSubmitting(true);
     setError('');
@@ -136,7 +151,7 @@ export default function AddRecipePage() {
   }
 
   return (
-    <Container className= 'recipeForm my-5'>
+    <Container className= 'recipeFormPage my-5'>
       <h2 className="addHeading text-center mb-4">Add New Recipe</h2>
       {error && <Alert variant="danger">{error}</Alert>}
 
@@ -156,6 +171,7 @@ export default function AddRecipePage() {
         setUploading={setUploading}
         userId={session.user.id}
       />
+      <AlertModal />
     </Container>
   );
 }

@@ -21,7 +21,7 @@ export const useAlert = () => {
     return (
       <div className="alert-overlay" onClick={handleClose}>
         <div
-          className={`alert-modal alert-${alertVariant}`}
+          className={`crm-alert alert-modal alert-${alertVariant}`}
           onClick={(e) => e.stopPropagation()}
           role="alertdialog"
           aria-modal="true"

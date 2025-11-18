@@ -3,6 +3,7 @@ import connect from "@/lib/mongodb";
 import Recipe from "@/models/Recipe";
 import mongoose from "mongoose";
 import { deleteImage } from "@/lib/cloudinary";
+import { validateRecipeFields } from '@/lib/validateRecipe';
 import { getServerSession } from "next-auth"; 
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"; 
 
@@ -51,8 +52,12 @@ export async function POST(request) {
   try {
     const recipeData = await request.json();
 
-    if (!recipeData.title) {
-      return NextResponse.json({ error: "Title is required" }, { status: 400 });
+    const errors = validateRecipeFields(recipeData);
+    if (errors.length > 0) {
+      return NextResponse.json(
+        { error: errors[0] },
+        { status: 400 }
+      );
     }
 
     const recipe = new Recipe({
