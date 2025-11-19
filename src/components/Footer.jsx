@@ -1,5 +1,4 @@
 'use client';
-import Link from 'next/link';
 import { FaGithub, FaInstagram, FaTwitter } from 'react-icons/fa';
 import '../styles/Footer.css';
 

@@ -75,7 +75,7 @@ export default function RecipeCard({ recipe, onDelete, isFavorite, onSaveToFavor
     <Card className="recipe-card h-100 shadow-sm overflow-hidden d-flex flex-column">
         <Card.Img
           variant='top'
-          src={recipe.image?.url || recipe.image}
+          src={recipe.image?.url || recipe.image || '/images/default recipe.jpg'}
           alt={recipe.title}
           className="recipe-image object-fit-contain"
           loading="lazy"

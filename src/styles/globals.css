@@ -83,6 +83,19 @@ button {
   to { transform: rotate(360deg); }
 }
 
+html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-content {
+  flex: 1;  
+}
+
 /* --- Custom 5-column layout --- */
 @media (min-width: 1200px) {
   .col-lg-2-4 {
@@ -90,3 +103,4 @@ button {
     max-width: 20%;
   }
 }
+
