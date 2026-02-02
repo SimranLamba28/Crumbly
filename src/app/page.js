@@ -20,7 +20,7 @@ export default function Home() {
     handleSearch,
     handleQuickSearch,
     noResults,
-  } = useRecipeSearch(process.env.SPOONACULAR_API_KEY);
+  } = useRecipeSearch();
 
   const { favorites, toggleFavorite } = useFavorites(session?.user?.id);
   

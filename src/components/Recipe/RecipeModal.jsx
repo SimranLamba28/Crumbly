@@ -134,20 +134,17 @@ export default function RecipeModal({ recipe, show, onClose, onSaveToFavorites, 
             <div className="recipe-time-info mb-4 p-3 bg-light rounded-3">
               {!userRecipe && (
                 <p className="mb-1">
-                  <strong>Ready in:</strong> {totalTime} mins
+                  <strong>Ready in:</strong> {totalTime} mins <br />
+                  <strong>Servings:</strong> {servings}
                 </p>
               )}
 
-              {userRecipe ? (
+              {userRecipe && (
                 <p className="mb-1">
                   <strong>Prep Time:</strong> {prepTime} mins <br />
                   <strong>Cook Time:</strong> {cookTime} mins <br />
                   <strong>Servings:</strong> {servings} <br />
                   <strong>Difficulty:</strong> {difficulty}
-                </p>
-              ) : (
-                <p className="mb-1">
-                  <strong>Servings:</strong> {servings}
                 </p>
               )}
 
