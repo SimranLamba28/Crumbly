@@ -23,10 +23,10 @@ export async function POST(req) {
         Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}`,
         'Content-Type': 'application/json',
         'HTTP-Referer': process.env.NEXTAUTH_URL || 'http://localhost:3000',
-        'X-Title': 'BakeMuse AI Assistant',
+        'X-Title': 'Crumbly AI Assistant',
       },
       body: JSON.stringify({
-        model: 'tngtech/deepseek-r1t2-chimera:free',
+        model: 'arcee-ai/trinity-large-preview:free',
         messages: fullMessages,
         stream: true,
         temperature: 0.7,
