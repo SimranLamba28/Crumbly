@@ -26,7 +26,7 @@ export async function POST(req) {
         'X-Title': 'Crumbly AI Assistant',
       },
       body: JSON.stringify({
-        model: 'openai/gpt-oss-120b:free',
+        model: 'dots-studio/dots-3-note-preview:free',
         messages: fullMessages,
         stream: true,
         temperature: 0.7,
